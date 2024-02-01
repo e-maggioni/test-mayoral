@@ -44,7 +44,7 @@ const Home = () => {
             <OrderField onChange={handleOrderChange} />
             <SearchField onChange={handleSearchChange} />
           </div>
-          <section className={classes.itemsContainer}>
+          <section className={classes.itemsContainer} data-testid="itemsContainer">
             {(data.length > 0) ? (
               data.map((el) => (
                 <Item

@@ -57,6 +57,7 @@ const OrderField = ({onChange}:Props) => {
                 if (selected.length === 0 || selected[0] == '' ) { return <>Ordenar por</>; }
                 return selected[0];
             }}
+            data-testid="orderField"
        >
             <MenuItem selected value="">Ordenar por</MenuItem>
             {options.map((option) => <MenuItem key={option} value={option} >{option}</MenuItem> )}

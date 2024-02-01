@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 const Item = ({idProd, nameProd, imgName, price, moreColors, discount, priceDiscounted }: ItemTypes) => {
     return(
-        <div className={classes.container}>
+        <div className={classes.container} >
            <figure>
              <img src={`/images/${imgName}`} alt="Product image" />
              <figcaption>{nameProd}</figcaption>
