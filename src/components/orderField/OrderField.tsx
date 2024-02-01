@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
+
+type Props = {
+  onChange: (orderType:string) => void
+};
 
 const OrderFieldStyled = styled(Select)({
     width: '100%',
@@ -30,33 +34,29 @@ const options = [
   'Precio menor',
 ];
 
-const OrderField = () => {
-  const [personName, setPersonName] = useState<string[]>([]);
+const OrderField = ({onChange}:Props) => {
+  const [orderType, setOrderType] = useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+  const handleChange = (event: SelectChangeEvent<typeof orderType>) => {
+    const { target: { value } } = event;
+    setOrderType(typeof value === 'string' ? value.split(',') : value);
   };
+
+  useEffect(()=> {
+    onChange(orderType?.[0]);
+  },[onChange, orderType]);
 
     return(
       <OrderFieldStyled
             displayEmpty
-            value={personName}
+            value={orderType}
             onChange={(e:any) => handleChange(e)}
             input={<OutlinedInput />}
             size='small'
             renderValue={(selected:any) => {
-                console.log("----> selected:",selected);
-                console.log("----> selected.length:",selected.length);
                 if (selected.length === 0 || selected[0] == '' ) { return <>Ordenar por</>; }
-                return selected.join(', ');
+                return selected[0];
             }}
-            inputProps={{ 'aria-label': 'Without label' }}
        >
             <MenuItem selected value="">Ordenar por</MenuItem>
             {options.map((option) => <MenuItem key={option} value={option} >{option}</MenuItem> )}
